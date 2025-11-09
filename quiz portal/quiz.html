@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Questions</title>
+  <style>
+    body { font-family: Arial; }
+    .quiz-container { width: 400px; margin: 40px auto; border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
+    .question { margin-bottom: 10px; }
+    .options button { display: block; margin: 6px 0; width: 100%; }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div id="timer">Time Left: <span id="time">30</span>s</div>
+    <div id="result"></div>
+  </div>
+  <script>
+    const quizData = [
+      { question: "What is 2 + 2?", options: ["3", "4", "5", "6"], answer: "4" }
+    ];
+    let timeLeft = 30, timer;
+    document.getElementById('question').textContent = quizData[0].question;
+    const optionsDiv = document.getElementById('options');
+    quizData[0].options.forEach(option => {
+      const btn = document.createElement('button');
+      btn.textContent = option;
+      btn.onclick = () => {
+        document.getElementById('result').textContent = option === quizData[0].answer ? 'Correct!' : 'Wrong!';
+        clearInterval(timer);
+      };
+      optionsDiv.appendChild(btn);
+    });
+    timer = setInterval(() => {
+      timeLeft--;
+      document.getElementById('time').textContent = timeLeft;
+      if (timeLeft === 0) {
+        clearInterval(timer);
+        document.getElementById('result').textContent = 'Time\'s up!';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
